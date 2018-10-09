@@ -12,6 +12,8 @@ Pointers::~Pointers(void)
 
 int main()
 {
+	//Maybe do the array at some point?
+
 	Pointers *p1 = new Pointers;
 
 	for (int i = 0; i < 3; i++)
@@ -24,15 +26,15 @@ int main()
 	int *kakka = new int[2];
 	kakka[0] = 12;
 	kakka[1] = 33;
+
 	delete [] kakka;
 	kakka = 0;
-	//*kakka = 1;
 
 	cout << kakka << "\n";
 
 	delete p1;
 
-	return 0;
+	//return 0;
 }
 
 void Pointers::AddItem(int i)
@@ -45,7 +47,7 @@ void Pointers::AddItem(int i)
 
 void Pointers::Print()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)	
 	{
 		cout << "Value is " << arrayOfPoints[i] << " right now.\n";
 	}
