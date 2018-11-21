@@ -1,0 +1,29 @@
+#include "Header_forclasstest.h"
+
+Enemy::Enemy(int a, int d, string n) : atk(a), def(d), name(n)
+{
+
+}
+
+
+int main()
+{
+	Bird kuukkeli(2, 1, "Kuukkeli", 2.5f);
+
+	Cow puhveli(3, 2, "Puhveli", 30.5f);
+
+	puhveli.Fart(puhveli);
+	kuukkeli.Flight(kuukkeli);
+
+	return 0;
+}
+
+void Bird::Flight(Bird bird)
+{
+	cout << "Tra la! The " << bird.name << " sings in happiness. It flies to the skies with the speed " << flightSpeed << "\n";
+}
+
+void Cow::Fart(Cow cow)
+{
+	cout << "Tra la! The " << cow.name << " sings in happiness. It flies to the skies and farts with the smell power of " << smell << "\n";
+}

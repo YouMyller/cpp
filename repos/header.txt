@@ -1,0 +1,56 @@
+#pragma once
+
+#ifndef CLASSTEST
+#define CLASSTEST
+
+#include "math.h""
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+class Enemy
+{
+public:
+
+	Enemy(int a, int d, string n);
+	~Enemy() {};
+	virtual void Attack() = 0;
+
+	int atk;
+	int def;
+	string name;
+
+};
+
+
+class Bird : public Enemy
+{
+public:
+
+	Bird(int a, int d, string n, float fs);
+	~Bird() {};
+	void Flight(Bird b);
+	void Attack();
+
+private:
+
+	float flightSpeed;
+};
+
+
+class Cow : public Enemy
+{
+public:
+
+	Cow(int a, int d, string n, float s);
+	~Cow() {};
+	void Fart(Cow cow);
+	void Attack();
+
+private:
+
+	float smell;
+};
+
+#endif
