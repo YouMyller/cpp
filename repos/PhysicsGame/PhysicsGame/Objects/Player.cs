@@ -12,33 +12,54 @@ namespace PhysicsGame
 {
     public class Player : Object
     {
-
-        public Player(Texture2D newTexture, Vector2 newPos) : base(newTexture, newPos)
+        public Player(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects) 
+            : base(newTexture, newPos, collisionObjects)
         {
-            scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
+            //scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
+            scale = new Vector2(texture.Width / 11, texture.Height / 9);
+
+            accelerationX = .05f;
+
+            collisionObjects.Add(this);
         }
 
-        public override void Update(GameTime gameTime)  // List<Object> objects
+        public override void Update(GameTime gameTime, List<Object> collisionObjects, Testbox testbox)  // List<Object> objects
         {
+
             position += velocity;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                velocity.X = 3f;
+                if (velocity.X < 3)
+                {
+                    velocity.X += accelerationX * 3;
+                }
+                velocity.X += accelerationX;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                velocity.X = -3f;
+                if (velocity.X >= 0)
+                {
+                    velocity.X -= accelerationX * 3;
+                }
+                velocity.X -= accelerationX;
             }
             else
             {
-                velocity.X = 0f;
+                if (velocity.X > 0)
+                {
+                    velocity.X -= accelerationX;
+                }
+                if (velocity.X < 0)
+                {
+                    velocity.X += accelerationX;
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {
-                position.Y -= 10f;
-                velocity.Y = -5f;
+                position.Y -= 20f;
+                velocity.Y = -10f;
                 hasJumped = true;
             }
 
@@ -55,6 +76,40 @@ namespace PhysicsGame
             if (hasJumped == false)
             {
                 velocity.Y = 0f;
+            }
+
+            foreach (var obj in collisionObjects)
+            {
+                if (obj == this)
+                {
+                    continue;
+                }
+
+                if (this.velocity.X > 0 && IsTouchingLeft(obj) || this.velocity.X < 0 && this.IsTouchingRight(obj))
+                {
+                    this.velocity.X = 0;
+                }
+
+                if (this.velocity.Y < 0 && this.IsTouchingBottom(obj))
+                {
+                    this.velocity.Y = 0;
+                }
+
+                if (this.IsTouchingTop(obj) && this.velocity.Y > 0)
+                {
+                    hasJumped = false;
+                    this.velocity.Y = 0;
+                }
+
+
+
+
+                /*if (rect.Intersects(obj.rect) && ve)
+                {
+                    //this.position.X += .1f;
+                    this.position.Y -= 20f;
+                }*/
+
             }
         }
     }

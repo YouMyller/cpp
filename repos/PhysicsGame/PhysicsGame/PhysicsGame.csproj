@@ -47,6 +47,7 @@
     <Compile Include="Objects\Gun.cs" />
     <Compile Include="Objects\Object.cs" />
     <Compile Include="Objects\Player.cs" />
+    <Compile Include="Objects\Testbox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,6 +62,9 @@
     <Content Include="Content\bullet.png" />
     <Content Include="Content\gun.png" />
     <Content Include="Content\man.png" />
+    <Content Include="Content\mr_blacksquare.png" />
+    <Content Include="Content\newbox.png" />
+    <Content Include="Content\newman.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

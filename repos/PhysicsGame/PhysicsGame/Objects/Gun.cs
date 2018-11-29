@@ -12,53 +12,19 @@ namespace PhysicsGame
 {
     class Gun : Object
     {
-        public Gun(Texture2D newTexture, Vector2 newPos) : base(newTexture, newPos)
+        public Gun(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects) 
+            : base(newTexture, newPos, collisionObjects)
         {
-            scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
-            origin = new Vector2(texture.Width / 2, texture.Height - 25);
+            //scale = new Vector2(targetX / (float)texture.Width + .1f, targetX / (float)texture.Width);
+            //scale.Y = scale.Y / 2;
+            //origin = new Vector2(texture.Width / 2, (texture.Height / 2) + 100);
+            scale = new Vector2(.5f, .7f);
+            //rect = new Rectangle((int)position.X, (int)position.Y, (int)scale.X, (int)scale.Y);
+            origin = new Vector2(texture.Width / 2, texture.Height / 2);
         }
 
-        public override void Update(GameTime gameTime)  //List<Object> objects
+        public override void Update(GameTime gameTime, List<Object> collisionObjects, Testbox testbox)  //List<Object> objects
         {
-
-            //Movement with character
-            position += velocity;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                velocity.X = 3f;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                velocity.X = -3f;
-            }
-            else
-            {
-                velocity.X = 0f;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
-            {
-                position.Y -= 10f;
-                velocity.Y = -5f;
-                hasJumped = true;
-            }
-
-            if (hasJumped == true)
-            {
-                velocity.Y += 0.15f;
-            }
-
-            if (position.Y + scale.Y >= 890)
-            {
-                hasJumped = false;
-            }
-
-            if (hasJumped == false)
-            {
-                velocity.Y = 0f;
-            }
-
             //Gun rotation
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -70,7 +36,6 @@ namespace PhysicsGame
             }
 
             direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
-
         }
     }
 }

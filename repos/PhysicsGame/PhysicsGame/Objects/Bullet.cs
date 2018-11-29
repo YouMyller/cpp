@@ -12,20 +12,24 @@ namespace PhysicsGame.Objects
     {
         float timer;
         public float lifeSpan;
+        float gravity;
 
-        //double vi, t = 0;
-        //double g = 9.8f;    
-
-
-        public Bullet(Texture2D newTexture, Vector2 newPos) : base(newTexture, newPos)
+        public Bullet(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects) 
+            : base(newTexture, newPos, collisionObjects)
         {
             scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
-            velocity = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * 5f + new Vector2(7f, 7f);
-            lifeSpan = 2;
+            //velocity = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * 20f + new Vector2(7f, 7f);
+            lifeSpan = 6;
+            velocity = new Vector2(14, 14);
+            accelerationY = .1f;
+            gravity = accelerationY;
+            //rect = new Rectangle((int)position.X, (int)position.Y, (int)scale.X, (int)scale.Y);
+            //collisionObjects.Add(this);
         }
 
-        public override void Update(GameTime gameTime)  // List<Object> objects
+        public override void Update(GameTime gameTime, List<Object> collisionObjects, Testbox testbox)
         {
+
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer > lifeSpan)
@@ -33,13 +37,36 @@ namespace PhysicsGame.Objects
                 isRemoved = true;
             }
 
-            position += direction * 20f;
+            position += direction * velocity;
 
-            
+            if (direction.Y >= 0)
+            {
+                velocity.Y += gravity;
+            }
+            else
+            {
+                velocity.Y -= gravity;
+            }
 
-            //vi -= 100;
-            //position.Y = (float)(vi * t - g * t * t / 2) + GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - texture.Height;
-            //t = t - (gameTime.ElapsedGameTime.TotalSeconds / 4);
+            direction.Y += .01f;
+
+            /*foreach (var obj in collisionObjects)
+            {
+                if (obj == this)
+                {
+                    continue;
+                }
+
+                if (this.velocity.X > 0 && IsTouchingLeft(obj) || this.velocity.X < 0 && this.IsTouchingRight(obj))
+                {
+                    this.velocity.X = 0;
+                }
+
+                if (this.velocity.Y > 0 && IsTouchingTop(obj) || this.velocity.Y < 0 && this.IsTouchingBottom(obj))
+                {
+                    this.velocity.Y = 0;
+                }
+            }*/
         }
     }
 }

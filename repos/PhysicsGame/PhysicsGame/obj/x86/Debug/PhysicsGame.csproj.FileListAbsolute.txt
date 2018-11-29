@@ -25,3 +25,6 @@ C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\obj\
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\gun.xnb
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\bullet.xnb
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\Fonts\basicfont.xnb
+C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\mr_blacksquare.xnb
+C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newman.xnb
+C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newbox.xnb

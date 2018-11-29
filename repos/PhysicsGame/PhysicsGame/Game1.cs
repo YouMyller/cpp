@@ -27,11 +27,12 @@ namespace PhysicsGame
         Texture2D playerSprite;
         Texture2D gunSprite;
         Texture2D bulletSprite;
+        Texture2D boxSprite;
 
-        //Character player;
         Player player;
         Gun gun;
-        //Bullet bullet;
+        Testbox testBox;
+        Testbox testBox2;
 
         RenderTarget2D mainTarget;
 
@@ -97,12 +98,19 @@ namespace PhysicsGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            playerSprite = Content.Load<Texture2D>("man");
+            playerSprite = Content.Load<Texture2D>("newman");
             gunSprite = Content.Load<Texture2D>("gun");
             bulletSprite = Content.Load<Texture2D>("bullet");
+            boxSprite = Content.Load<Texture2D>("newbox");
 
-            player = new Player(playerSprite, new Vector2(0, 900));
-            gun = new Gun(gunSprite, new Vector2(50, 1000));
+            objects = new List<Object>();
+
+            player = new Player(playerSprite, new Vector2(0, 900), objects); //targetX / (float)playerSprite.Width, targetX / (float)playerSprite.Width)
+
+            gun = new Gun(boxSprite, player.position, objects);
+
+            testBox = new Testbox(boxSprite, new Vector2(700, 500), objects, testBox);  //targetX / (float)boxSprite.Width, targetX / (float)boxSprite.Width)
+            testBox2 = new Testbox(boxSprite, new Vector2(800, 700), objects, testBox);
 
             basicFont = Content.Load<SpriteFont>("Fonts/basicfont");
 
@@ -139,7 +147,16 @@ namespace PhysicsGame
 
             foreach (Bullet b in bullets)
             {
-                b.Update(gameTime);
+                b.Update(gameTime, objects, testBox);
+            }
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i].isRemoved)
+                {
+                    objects.RemoveAt(i);
+                    i--;
+                }
             }
 
             for (int i = 0; i < bullets.Count; i++)
@@ -151,19 +168,22 @@ namespace PhysicsGame
                 }
             }
 
-            player.Update(gameTime);    //objects
-            gun.Update(gameTime);
+            player.Update(gameTime, objects, testBox);
+            gun.Update(gameTime, objects, testBox);
+            testBox.Update(gameTime, objects, testBox);
+
+            gun.position = new Vector2 (player.position.X + 50, player.position.Y + 100);
 
             base.Update(gameTime);
         }
 
         void Shoot()
         {
-            Bullet bullet = new Bullet(bulletSprite, new Vector2(0, 0));
+            Bullet bullet = new Bullet(bulletSprite, new Vector2(gun.position.X + 500, gun.position.Y - 500), objects); //targetX / (float)bulletSprite.Width, targetX / (float)bulletSprite.Width
 
             bullets.Add(bullet);
             bullet.direction = new Vector2(gun.direction.X, gun.direction.Y);
-            bullet.position = new Vector2(gun.position.X, gun.position.Y - 10);
+            //bullet.position = new Vector2(gun.position.X + 100, gun.position.Y - 100);     //make better with rotation or direction somehow if there's time
         }
 
         /// <summary>
@@ -190,12 +210,31 @@ namespace PhysicsGame
             spriteBatch.End();
 
             spriteBatch.Begin();
-
             var fontY = 10;
             var i = 0;
-
-            spriteBatch.DrawString(basicFont, string.Format("Rotation {0}: {1}", ++i, ((Gun)gun).rotation), new Vector2(10, fontY += 20), Color.White);
+            spriteBatch.DrawString(basicFont, string.Format("Direction {0}: {1}", ++i, ((Player)player).hasJumped), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.End();
+
+            spriteBatch.Begin();
+            var fontKakka = 10;
+            var kakka = 0;
+            spriteBatch.DrawString(basicFont, string.Format("Collision Objects in scene {0}: {1}", ++kakka, (objects).Count), new Vector2(10, fontKakka += 120), Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            var fontGagga = 10;
+            var gagga = 0;
+            spriteBatch.DrawString(basicFont, string.Format("Box Sprite Height {0}: {1}", ++gagga, (boxSprite).Height), new Vector2(10, fontKakka += 120), Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            testBox.Draw(spriteBatch);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            testBox2.Draw(spriteBatch);
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
