@@ -28,3 +28,5 @@ C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\mr_blacksquare.xnb
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newman.xnb
 C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newbox.xnb
+C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newbullet.xnb
+C:\Users\User\Documents\Visual Studio 2017\Projects\PhysicsGame\PhysicsGame\bin\Windows\x86\Debug\Content\newbullet_withdir.xnb

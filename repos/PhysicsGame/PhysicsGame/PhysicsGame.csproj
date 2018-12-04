@@ -64,6 +64,8 @@
     <Content Include="Content\man.png" />
     <Content Include="Content\mr_blacksquare.png" />
     <Content Include="Content\newbox.png" />
+    <Content Include="Content\newbullet.png" />
+    <Content Include="Content\newbullet_withdir.png" />
     <Content Include="Content\newman.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>

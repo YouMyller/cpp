@@ -33,6 +33,7 @@ namespace PhysicsGame
         Gun gun;
         Testbox testBox;
         Testbox testBox2;
+        Testbox testBox3;
 
         RenderTarget2D mainTarget;
 
@@ -100,17 +101,18 @@ namespace PhysicsGame
 
             playerSprite = Content.Load<Texture2D>("newman");
             gunSprite = Content.Load<Texture2D>("gun");
-            bulletSprite = Content.Load<Texture2D>("bullet");
+            bulletSprite = Content.Load<Texture2D>("newbullet_withdir");
             boxSprite = Content.Load<Texture2D>("newbox");
 
             objects = new List<Object>();
 
-            player = new Player(playerSprite, new Vector2(0, 900), objects); //targetX / (float)playerSprite.Width, targetX / (float)playerSprite.Width)
+            player = new Player(playerSprite, new Vector2(0, 900), objects, new Vector2(0, 0)); //targetX / (float)playerSprite.Width, targetX / (float)playerSprite.Width)
 
-            gun = new Gun(boxSprite, player.position, objects);
+            gun = new Gun(boxSprite, new Vector2(player.position.X + player.scale.X / 2, player.position.Y - player.scale.Y), objects, new Vector2(0, 0));
 
-            testBox = new Testbox(boxSprite, new Vector2(700, 500), objects, testBox);  //targetX / (float)boxSprite.Width, targetX / (float)boxSprite.Width)
-            testBox2 = new Testbox(boxSprite, new Vector2(800, 700), objects, testBox);
+            testBox = new Testbox(boxSprite, new Vector2(900, 500), objects, testBox, new Vector2(0, 0));  //targetX / (float)boxSprite.Width, targetX / (float)boxSprite.Width)
+            testBox2 = new Testbox(boxSprite, new Vector2(1000, 700), objects, testBox, new Vector2(0, 0));
+            testBox3 = new Testbox(boxSprite, new Vector2(800, 700), objects, testBox, new Vector2(0, 0));
 
             basicFont = Content.Load<SpriteFont>("Fonts/basicfont");
 
@@ -172,14 +174,15 @@ namespace PhysicsGame
             gun.Update(gameTime, objects, testBox);
             testBox.Update(gameTime, objects, testBox);
 
-            gun.position = new Vector2 (player.position.X + 50, player.position.Y + 100);
+            gun.position = new Vector2 (player.position.X + 75, player.position.Y - player.scale.Y);
 
             base.Update(gameTime);
         }
 
         void Shoot()
         {
-            Bullet bullet = new Bullet(bulletSprite, new Vector2(gun.position.X + 500, gun.position.Y - 500), objects); //targetX / (float)bulletSprite.Width, targetX / (float)bulletSprite.Width
+            Bullet bullet = new Bullet(bulletSprite, gun.position, objects, new Vector2(0,0)); //targetX / (float)bulletSprite.Width, targetX / (float)bulletSprite.Width
+            //new Vector2(gun.position.X + 100, gun.position.Y - 100)
 
             bullets.Add(bullet);
             bullet.direction = new Vector2(gun.direction.X, gun.direction.Y);
@@ -212,7 +215,7 @@ namespace PhysicsGame
             spriteBatch.Begin();
             var fontY = 10;
             var i = 0;
-            spriteBatch.DrawString(basicFont, string.Format("Direction {0}: {1}", ++i, ((Player)player).hasJumped), new Vector2(10, fontY += 20), Color.White);
+            spriteBatch.DrawString(basicFont, string.Format("Direction {0}: {1}", ++i, ((Testbox)testBox2).rect.Right), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.End();
 
             spriteBatch.Begin();
@@ -224,7 +227,7 @@ namespace PhysicsGame
             spriteBatch.Begin();
             var fontGagga = 10;
             var gagga = 0;
-            spriteBatch.DrawString(basicFont, string.Format("Box Sprite Height {0}: {1}", ++gagga, (boxSprite).Height), new Vector2(10, fontKakka += 120), Color.White);
+            spriteBatch.DrawString(basicFont, string.Format("Box Sprite Height {0}: {1}", ++gagga, ((Testbox)testBox2).rect.Bottom), new Vector2(10, fontKakka += 120), Color.White);
             spriteBatch.End();
 
             spriteBatch.Begin();
@@ -233,6 +236,10 @@ namespace PhysicsGame
 
             spriteBatch.Begin();
             testBox2.Draw(spriteBatch);
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            testBox3.Draw(spriteBatch);
             spriteBatch.End();
 
 

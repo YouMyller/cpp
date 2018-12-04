@@ -10,8 +10,8 @@ namespace PhysicsGame
 {
     public class Testbox : Object
     {
-        public Testbox(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects, Testbox box) 
-            : base(newTexture, newPos, collisionObjects)
+        public Testbox(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects, Testbox box, Vector2 scaleBase) 
+            : base(newTexture, newPos, collisionObjects, scaleBase)
         {
             //scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
             scale = new Vector2(texture.Width / 9, texture.Height / 9);

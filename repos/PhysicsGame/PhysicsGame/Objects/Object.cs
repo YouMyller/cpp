@@ -33,37 +33,30 @@ namespace PhysicsGame
 
         protected readonly Rectangle gameBoundaries;
 
-        //public Rectangle rect;
+        public string name;
 
+        public Vector2 scaleRect;
 
-        public Object(Texture2D newTexture, Vector2 newPos, List<Object> objects)
+        public Object(Texture2D newTexture, Vector2 newPos, List<Object> objects, Vector2 scaleBase)
         {
             texture = newTexture;
             position = newPos;
             hasJumped = true;
+            scaleBase = new Vector2(140, 110);
+            scaleRect = scaleBase;
         }
 
-        public int Width
+        public virtual void Update(GameTime gameTime, List<Object> collisionObjects, Testbox testbox)
         {
-            get { return 140; }
-        }
-
-        public int Height
-        {
-            get { return 110; }
+            position += velocity;
         }
 
         public Rectangle rect
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, Width, Height);
+                return new Rectangle((int)position.X, (int)position.Y, (int)scaleRect.X, (int)scaleRect.Y);
             }
-        }
-
-        public virtual void Update(GameTime gameTime, List<Object> collisionObjects, Testbox testbox)
-        {
-            position += velocity;
         }
 
         public virtual void Draw(SpriteBatch spB)

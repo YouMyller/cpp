@@ -12,8 +12,8 @@ namespace PhysicsGame
 {
     public class Player : Object
     {
-        public Player(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects) 
-            : base(newTexture, newPos, collisionObjects)
+        public Player(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects, Vector2 scaleBase) 
+            : base(newTexture, newPos, collisionObjects, scaleBase)
         {
             //scale = new Vector2(targetX / (float)texture.Width, targetX / (float)texture.Width);
             scale = new Vector2(texture.Width / 11, texture.Height / 9);
@@ -56,21 +56,16 @@ namespace PhysicsGame
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+            /*if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {
                 position.Y -= 20f;
                 velocity.Y = -10f;
-                hasJumped = true;
-            }
+                //hasJumped = true;
+            }*/
 
             if (hasJumped == true)
             {
                 velocity.Y += 0.15f;
-            }
-
-            if (position.Y + scale.Y >= 890)
-            {
-                hasJumped = false;
             }
 
             if (hasJumped == false)
@@ -78,9 +73,14 @@ namespace PhysicsGame
                 velocity.Y = 0f;
             }
 
+            Collision(collisionObjects);
+        }
+
+        void Collision(List<Object> collisionObjects)
+        {
             foreach (var obj in collisionObjects)
             {
-                if (obj == this)
+                if (obj == this || obj is Bullet)
                 {
                     continue;
                 }
@@ -90,26 +90,33 @@ namespace PhysicsGame
                     this.velocity.X = 0;
                 }
 
-                if (this.velocity.Y < 0 && this.IsTouchingBottom(obj))
+                else if (this.velocity.Y < 0 && this.IsTouchingBottom(obj))
                 {
                     this.velocity.Y = 0;
                 }
 
-                if (this.IsTouchingTop(obj) && this.velocity.Y > 0)
+                else if (this.IsTouchingTop(obj) && this.velocity.Y > 0)
                 {
                     hasJumped = false;
                     this.velocity.Y = 0;
                 }
-
-
-
-
-                /*if (rect.Intersects(obj.rect) && ve)
+                else
                 {
-                    //this.position.X += .1f;
-                    this.position.Y -= 20f;
-                }*/
-
+                    if (position.Y + scale.Y >= 890)
+                    {
+                        hasJumped = false;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+                    {
+                        position.Y -= 20f;
+                        velocity.Y = -10f;
+                        hasJumped = true;
+                    }
+                    else if (position.Y + scale.Y < 890)
+                    {
+                        hasJumped = true;
+                    }
+                }
             }
         }
     }
