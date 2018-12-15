@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/bullet.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/Fonts/File.spritefont</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/gun.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/heart1.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/heart2.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/man.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/mr_blacksquare.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/newbox.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/newbullet.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/newbullet_withdir.png</File>
+    <File>C:/Users/User/Documents/Visual Studio 2017/Projects/PhysicsGame/PhysicsGame/Content/newman.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File>Fonts/basicfont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
