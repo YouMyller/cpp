@@ -13,7 +13,7 @@ namespace PhysicsGame
     public class MovingPlatform : Object
     {
         public bool important;
-        public bool forward;
+        bool forward;
         public int score = 0;
 
         public MovingPlatform(Texture2D newTexture, Vector2 newPos, List<Object> collisionObjects, Vector2 scaleBase, List<MovingPlatform> movers)
@@ -39,13 +39,11 @@ namespace PhysicsGame
             {
                 velocity.X = -1;
             }
-
-            Collision(collisionObjects);
         }
 
-        void Collision(List<Object> collisionObjects)
+        public override void Collision(List<Object> returnObjects)        //List<Object> collisionObjects
         {
-            foreach (var obj in collisionObjects)
+            foreach (var obj in returnObjects)
             {
                 if (obj == this || obj is Bullet && important == false)
                 {
@@ -66,7 +64,7 @@ namespace PhysicsGame
 
                 if (obj is Bullet && important == true)
                 {
-                    if (IsTouchingTop(obj) || IsTouchingBottom(obj) || IsTouchingLeft(obj) || IsTouchingRight(obj))
+                    if (rect.Intersects(obj.rect))
                     {
                         score += 1;
                     }

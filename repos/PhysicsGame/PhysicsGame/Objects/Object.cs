@@ -11,24 +11,25 @@ namespace PhysicsGame
 {
     public class Object
     {
-        public Texture2D texture;
+        protected Texture2D texture;
 
         public Vector2 position;
-        public Vector2 velocity;
+        protected Vector2 velocity;
         public Vector2 scale;      
-        public Vector2 origin;
+        protected Vector2 origin;
         public Vector2 direction;
 
-        public bool hasJumped;
+        protected bool hasJumped;
         public bool isRemoved = false;
 
-        public float accelerationX;
-        public float accelerationY;
-        public float targetX = 128;
+        protected float accelerationX;
+        float targetX = 128;
         public float rotation;
-        public float rotationVelocity = 3f;
+        protected float rotationVelocity = 3f;
 
         public Vector2 scaleRect;
+
+        protected float weight;
 
         public Object(Texture2D newTexture, Vector2 newPos, List<Object> objects, Vector2 scaleBase)
         {
@@ -42,6 +43,8 @@ namespace PhysicsGame
         {
             position += velocity;
         }
+
+        public virtual void Collision(List<Object> returnObjects) { }
 
         public Rectangle rect
         {
@@ -57,8 +60,7 @@ namespace PhysicsGame
         }
 
         //Collision
-        //THESE ARE SUPPOSED TO BE PROTECTED
-        public bool IsTouchingLeft(Object obj)
+        protected bool IsTouchingLeft(Object obj)
         {
             return this.rect.Right + this.velocity.X > obj.rect.Left &&
                 this.rect.Left < obj.rect.Left &&
@@ -66,7 +68,7 @@ namespace PhysicsGame
                 this.rect.Top < obj.rect.Bottom;
         }
 
-        public bool IsTouchingRight(Object obj)
+        protected bool IsTouchingRight(Object obj)
         {
             return this.rect.Left + this.velocity.X < obj.rect.Right &&
                 this.rect.Right > obj.rect.Right &&
@@ -74,7 +76,7 @@ namespace PhysicsGame
                 this.rect.Top < obj.rect.Bottom;
         }
 
-        public bool IsTouchingTop(Object obj)
+        protected bool IsTouchingTop(Object obj)
         {
             return this.rect.Bottom + this.velocity.Y > obj.rect.Top &&
                 this.rect.Top < obj.rect.Top &&
@@ -82,7 +84,7 @@ namespace PhysicsGame
                 this.rect.Left < obj.rect.Right;
         }
 
-        public bool IsTouchingBottom(Object obj)
+        protected bool IsTouchingBottom(Object obj)
         {
             return this.rect.Top + this.velocity.Y < obj.rect.Bottom &&
                 this.rect.Bottom > obj.rect.Bottom &&

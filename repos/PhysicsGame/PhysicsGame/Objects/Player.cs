@@ -20,13 +20,13 @@ namespace PhysicsGame
             scaleRect = scaleBase;
 
             accelerationX = .05f;
+            weight = .15f;
 
             collisionObjects.Add(this);
         }
 
         public override void Update(GameTime gameTime, List<Object> collisionObjects)
         {
-
             position += velocity;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
@@ -59,20 +59,18 @@ namespace PhysicsGame
 
             if (hasJumped == true)
             {
-                velocity.Y += 0.15f;
+                velocity.Y += weight;
             }
 
             if (hasJumped == false)
             {
                 velocity.Y = 0f;
             }
-
-            Collision(collisionObjects);
         }
 
-        void Collision(List<Object> collisionObjects)
+        public override void Collision(List<Object> returnObjects)
         {
-            foreach (var obj in collisionObjects)
+            foreach (var obj in returnObjects)
             {
                 if (obj == this || obj is Bullet)
                 {

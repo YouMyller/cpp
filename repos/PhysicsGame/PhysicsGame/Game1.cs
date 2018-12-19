@@ -59,7 +59,8 @@ namespace PhysicsGame
 
         SpriteFont basicFont;
 
-        Bullet testBullet;
+        Quadtree quad;
+        List<Object> returnObjects;
 
         public Game1()
         {
@@ -121,33 +122,26 @@ namespace PhysicsGame
             floor = new Testbox(boxSprite, new Vector2(0, 1010), objects, new Vector2(1120, 110), boxes);
             floor.scale.X *= 16;
 
-            movePlat = new MovingPlatform(boxSprite, new Vector2(1500, 200), objects, new Vector2(210, 110), movers);
-            movePlat.scale.X *= 1.5f;
-            movePlat2 = new MovingPlatform(boxSprite, new Vector2(1400, 500), objects, new Vector2(210, 110), movers);
-            movePlat2.scale.X *= 1.5f;
+            movePlat = new MovingPlatform(boxSprite, new Vector2(1500, 200), objects, new Vector2(140, 110), movers);
+            movePlat2 = new MovingPlatform(boxSprite, new Vector2(1400, 500), objects, new Vector2(140, 110), movers);
 
             goal = new MovingPlatform(goalSprite, new Vector2(1600, 800), objects, new Vector2(140, 110), movers);
             goal.important = true;
 
-            basicFont = Content.Load<SpriteFont>("Fonts/basicfont");
+            quad = new Quadtree(0, new Rectangle(0, 0, screenW, screenH));
 
-            testBullet = new Bullet(bulletSprite, gun.position, objects, new Vector2(900, 900));
+            basicFont = Content.Load<SpriteFont>("Fonts/basicfont");
 
             screenScale = new Vector2(targetX / (float)playerSprite.Width, targetX / (float)playerSprite.Width);
             targetY = playerSprite.Height * screenScale.Y;
         }
-
-        /*protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }*/
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            previousKey = currentKey;       //Ampuminen vois tapahtua Playerissä. Esim niin että Player ottaa Bulletin parametrinä ja luo niitä sitä kautta???
+            previousKey = currentKey;       
             currentKey = Keyboard.GetState();
 
             if (currentKey.IsKeyDown(Keys.Z) && previousKey.IsKeyUp(Keys.Z))
@@ -184,9 +178,28 @@ namespace PhysicsGame
             movePlat.Update(gameTime, objects);
             movePlat2.Update(gameTime, objects);
             goal.Update(gameTime, objects);
-            testBullet.Update(gameTime, objects);
 
             gun.position = new Vector2 (player.position.X + 75, player.position.Y - player.scale.Y);
+
+            //Quadtree stuff
+            returnObjects = new List<Object>();
+
+            quad.Clear();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                quad.Insert(objects[i]);
+            }
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                returnObjects.Clear();
+                quad.Retrieve(returnObjects, objects[i]);
+            }
+
+            for (int x = 0; x < returnObjects.Count; x++)
+            {
+                returnObjects[x].Collision(returnObjects);
+            }
 
             base.Update(gameTime);
         }
@@ -234,17 +247,12 @@ namespace PhysicsGame
 
             spriteBatch.Begin();
             var fontY = 10;
-            spriteBatch.DrawString(basicFont, string.Format("TestBullet is touching top: {0}", ((Bullet)testBullet).kakka), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Points: {0}", ((MovingPlatform)goal).score), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Move: Arrow Keys", ((MovingPlatform)goal).score), new Vector2(10, fontY += 40), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Aim: A/D", ((MovingPlatform)goal).score), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Jump: Space", ((MovingPlatform)goal).score), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Shoot: Z", ((MovingPlatform)goal).score), new Vector2(10, fontY += 20), Color.White);
             spriteBatch.DrawString(basicFont, string.Format("Aim for the heart!", ((MovingPlatform)goal).score), new Vector2(10, fontY += 20), Color.White);
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            testBullet.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
